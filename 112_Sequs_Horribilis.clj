@@ -3,6 +3,8 @@
 (fn fs [n [f & r :as s]]
   (if f 
       (if (sequential? f) 
-          (list (fs n f))
+          (#(if (= f %) (cons f (fs (- n (apply + (flatten f))) r))
+                (list %))
+            (fs n f))
           (if (< n f) '() (cons f (fs (- n f) r))))
       '()))
