@@ -9,9 +9,8 @@
           (if (< n f) '() (cons f (fs (- n f) r))))
       '()))
 
-; No duplicate summation (apply + (flatten ...))
-(defn fs [n [f & r :as s]]
-  ;(do (println "n:" n "s:" s)
+#(or (:s (% %2 %3)) [])
+(fn fs [n [f & r :as s]]
   (if f 
       (if (sequential? f) 
           (let [{nn :n f-new :s} (fs n f)]
@@ -21,4 +20,4 @@
                           (if (= f f-new) (:s (fs nn r)))) } ))
           (let [nn (- n f)]
               { :n nn 
-                :s (if (>= nn 0) (cons f (:s (fs nn r)))) } ))));)
+				        :s (if (>= nn 0) (cons f (:s (fs nn r)))) } ))))
