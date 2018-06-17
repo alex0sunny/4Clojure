@@ -21,4 +21,4 @@
                           (if (= f f-new) (:s (fs nn r)))) } ))
           (let [nn (- n f)]
               { :n nn 
-				        :s (if (>= nn 0) (cons f (:s (fs nn r)))) } ))))
+		:s (if (>= nn 0) (cons f (:s (fs nn r)))) } ))))
