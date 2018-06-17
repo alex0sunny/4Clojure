@@ -9,6 +9,7 @@
           (if (< n f) '() (cons f (fs (- n f) r))))
       '()))
 
+; no duplicate summation (apply + (flatten ...))
 #(or (:s (% %2 %3)) [])
 (fn fs [n [f & r :as s]]
   (if f 
