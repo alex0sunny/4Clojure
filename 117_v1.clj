@@ -12,7 +12,7 @@
         be	(#(fe % (take (count (first %)) (repeat \#))) be0)
         fp	#(partition 3 1 %)
         bks	(map #(apply map list (map fp %)) (fp be))
-        fsm	#(hash-map  :c (nth % 4)
+        fsm	#(hash-map  :c (nth % 4) 
                         :s (set (map (partial nth %) (range 1 8 2))))
         fmc	(fn [{c :c s :s}] (if (and (not= c \#) (get s \M)) \M c))
         nb	(map #(map (comp fmc fsm flatten) %) bks)]
