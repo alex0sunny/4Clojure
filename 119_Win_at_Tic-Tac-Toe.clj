@@ -9,9 +9,9 @@
 (fn [k b]
   (let [rg	(range 3)
         fw	#(	(set (map set (concat % (apply map list %) 
-									                    (map (partial map nth %) 
-                        	                 [rg (reverse rg)])))) 
-               	#{k} )
+					      (map (partial map nth %) 
+                        	                   [rg (reverse rg)])))) 
+               		#{k} )
         prs	(for [i rg j rg :let [pair [i j]]
                    :when (= :e (get-in b pair))] pair) ]
     (set (filter #(fw (assoc-in b % k)) prs))))
