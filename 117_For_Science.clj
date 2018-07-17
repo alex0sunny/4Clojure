@@ -11,15 +11,7 @@
 
 ;The mouse is not allowed to travel diagonally in the maze (only up/down/left/right), nor can he escape the edge of the maze. Your function must return true iff the maze is solvable by the mouse.
 
-(fn [b] 
-  (let [fe	#(concat [%2] % [%2])
-        be0	(map #(fe % \#) b)
-        be	(#(fe % (take (count (first %)) (repeat \#))) be0)
-        fp	#(partition 3 1 %)
-        bks	(map #(apply map list (map fp %)) (fp be))
-        fsm	#(hash-map  :c (nth % 4)
-                        :s (set (map (partial nth %) (range 1 8 2))))
-        fmc	(fn [{c :c s :s}] (if (and (not= c \#) (get s \M)) \M c))
-        nb	(map #(map (comp fmc fsm flatten) %) bks)]
-      (if (= b nb) false 
-          (if (every? #(not= \C %) (flatten nb)) true (recur nb)))))
+;; The remake of the Chouser's great solution
+(fn fr [f b] (#(if (get (set (apply concat b)) \C)
+                   (and (not= % b) (fr f %)) true)	(f (f b))))
+(fn [b] (apply map str (map #(.replaceAll % "MC|CM|M | M" "MM") b)))
