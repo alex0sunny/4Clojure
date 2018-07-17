@@ -13,6 +13,6 @@
 
 ;; The remake of the Chouser's great solution
 (fn fr [f b] (  #(if (get (set (apply concat b)) \C)
-                   (and (not= % b) (fr f %)) true)	
+                     (and (not= % b) (fr f %)) true)	
                  (f (f b))) )
 (fn [b] (apply map str (map #(.replaceAll % "MC|CM|M | M" "MM") b)))
