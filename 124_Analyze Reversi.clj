@@ -14,10 +14,15 @@
 (def rs-prs (map (partial map reverse) cs-prs))
 (def ls-prs (concat rs-prs cs-prs ds-prs))
 (defn f-line [brd prs] (hash-map :prs prs :dat (map (partial get-in brd) prs)))
-(defn f-lines [brd ls-prs] (map (partial f-line brd) ls-prs))
-(def lmaps (f-lines brd ls-prs))
+(defn f-lines [brd] (map (partial f-line brd) ls-prs))
 (def prs (filter #(= 'e (get-in brd %)) (mapcat #(map (partial list %) rg) rg)))
-(defn f-ckl [{prs :prs dat :dat}] 
-	(let [comb (some #(combs %) dat)
-	      ps (if (= 3 (count comb)) (take-last 3 prs) prs)]
-	     (if comb
+(defn f-ck-lm [{prs :prs dat :dat}] 
+	(let [f (some #(#{[wb bw wb] [wb bw bw wb]} (% dat)) 
+	              [identity rest butlast])] 
+	     (if f (butlast (rest (f prs))))))
+(defn f-ck-move [pair] 
+  (let [ls-maps (f-lines (assoc-in brd pair wb))] (mapcat f-ck-lm ls-maps)))
+(def res (reduce (fn [m p] (#(if (empty? %) m (assoc m p (set %))) 
+                             (f-ck-move p))) {} prs))
+
+(println prs)
