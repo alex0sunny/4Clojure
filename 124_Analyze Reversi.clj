@@ -17,9 +17,9 @@
 (defn f-lines [brd] (map (partial f-line brd) ls-prs))
 (def prs (filter #(= 'e (get-in brd %)) (mapcat #(map (partial list %) rg) rg)))
 (defn f-ck-lm [{prs :prs dat :dat}] 
-	(let [f (some #(#{[wb bw wb] [wb bw bw wb]} (% dat)) 
+	(let [f (some #(if (#{[wb bw wb] [wb bw bw wb]} (% dat)) %)
 	              [identity rest butlast])] 
-	     (if f (butlast (rest (f prs))))))
+      	     (if f (butlast (rest (f prs))))))
 (defn f-ck-move [pair] 
   (let [ls-maps (f-lines (assoc-in brd pair wb))] (mapcat f-ck-lm ls-maps)))
 (def res (reduce (fn [m p] (#(if (empty? %) m (assoc m p (set %))) 
