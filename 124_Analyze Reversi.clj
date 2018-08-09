@@ -19,7 +19,7 @@
                   (if (#{[wb bw wb] [wb bw bw wb]} dat) (butlast (rest prs))))
         f-ck-move #(mapcat f-ck-lm (f-lines (assoc-in brd % wb)))]
     (reduce (fn [m p] (#(if (empty? %) m (assoc m p (set %))) (f-ck-move p))) 
-            {} prs))
+            {} prs)))
 
 (def wb 'w)
 (def bw (if (= wb 'w) 'b 'w))
