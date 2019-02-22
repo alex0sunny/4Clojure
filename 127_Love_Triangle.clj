@@ -29,9 +29,7 @@
                         (map #(map (partial vector %) [1 0 -1]) [1 -1])))
         f-ck (fn [prs d] ( (fn [prs] (if (every? #(= 1 (get-in dm %)) prs) prs))
                            (set (mapcat #(map vec (map (partial map + %) d)) prs)) ))
-        psets (flatten
-                (for [x (range w) y (range h) :when (= 1 (get-in dm [y x]))] 
-                  (for [d ds] (reduce into 
-                                      (take-while #(not= nil %) 
-                                                  (iterate #(f-ck % d) #{[y x]}))))))]
+        psets (for [x (range w) y (range h) d ds :when (= 1 (get-in dm [y x]))] 
+                   (reduce into (take-while #(not= nil %) 
+                                            (iterate #(f-ck % d) #{[y x]}))))]
     (#(if (> % 1) %) (apply max (map count psets)))))
