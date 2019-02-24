@@ -27,8 +27,8 @@
         ds (mapcat #(vector (butlast %) % (rest %))
                    (mapcat #(vector % (map reverse %))
                            (map #(map (partial vector %) [1 0 -1]) [1 -1])))
-        f-ck (fn [prs d] (set (mapcat #(map vec (map (partial map + %) d)) prs)))
+        f-nx (fn [prs d] (set (mapcat #(map vec (map (partial map + %) d)) prs)))
         psets (for [x (range w) y (range h) d ds :when (= 1 (get-in dm [y x]))] 
                    (reduce into (take-while (partial every? #(= 1 (get-in dm %)))
-                                            (iterate #(f-ck % d) #{[y x]}))))]
+                                            (iterate #(f-nx % d) #{[y x]}))))]
     (#(if (> % 1) %) (apply max (map count psets)))))
