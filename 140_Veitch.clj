@@ -1,6 +1,6 @@
 (defn fkarn [in] 
   (let [[D U I SU] [clojure.set/difference clojure.set/union
-                      clojure.set/intersection clojure.set/superset?]
+                    clojure.set/intersection clojure.set/superset?]
         fl (fn [sym] (symbol (clojure.string/lower-case (str sym))))
         ftr (fn [si so] (#(if (and (= 2 (count %)) (= 1 (count (set (map fl %))))) 
                               [so (apply disj si %)]) (D (U si so) (I si so))))
