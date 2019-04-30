@@ -23,7 +23,7 @@
         ftr (fn [si so] (#(if (= 1 (count (fl %))) (apply disj si %)) 
                           (into (apply disj si so) (apply disj so si))))
         fck (fn [ss si] (#(if (not-empty %) (into (disj ss si) %) ss) 
-                          (set (keep (map (partial ftr si) ss)))))
+                          (set (filter identity (map (partial ftr si) ss)))))
         fte #(last (take-while identity (iterate % %2)))
         ssr (fte (fn [ss] (#(if (not= ss %) %) (reduce fck ss ss))) in)
         fcp (fn [ss] (every? (fn [s] (some #(empty? (apply disj % s)) ss)) in))] 
