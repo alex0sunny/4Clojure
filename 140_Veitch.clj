@@ -27,3 +27,4 @@
         fte #(last (take-while identity (iterate % %2)))
         ssr (fte (fn [ss] (#(if (not= ss %) %) (reduce fck ss ss))) in)
         fcp (fn [ss] (every? (fn [s] (some #(empty? (apply disj % s)) ss)) in))] 
+    (fte (fn [ss] (some #(if (fcp %) %) (map (partial disj ss) ss))) ssr)))
