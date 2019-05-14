@@ -18,3 +18,4 @@
                         (drop-while #(some nil? (flatten %))
                           (iterate #(butlast (map butlast %)) rec)))))))]
     (frequencies (map count (reduce into #{} (map frecs als))))))
+
