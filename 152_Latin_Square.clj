@@ -1,9 +1,9 @@
 (fn [v]
   (let [l (apply max (map count v)) w (count v)
         fw (fn [r] (map #(take % (repeat nil)) (range (- (inc l) (count r)))))
-        fr (fn [r] (apply (partial map #(concat % r %2)) 
+        fr (fn [r] (apply (partial map #(vec (concat % r %2))) 
                           (#(list % (reverse %)) (fw r))))
-        fre (fn [vs rs] (mapcat (fn [r] (map #(concat % [r]) vs)) rs))
+        fre (fn [vs rs] (mapcat (fn [r] (map #(vec (concat % [r])) vs)) rs))
         als (#(reduce fre (map list (first %)) (rest %)) (map fr v))
         frecs (fn [al]
                 (filter #(apply = (map sort (concat % (apply map list %))))
