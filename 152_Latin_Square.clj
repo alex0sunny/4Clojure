@@ -1,8 +1,7 @@
 (fn [v]
   (let [l (apply max (map count v)) w (count v)
-        fw (fn [r] (map #(take % (repeat nil)) (range (- (inc l) (count r)))))
-        fr (fn [r] 
-             (apply (partial map #(concat % r %2)) (#(list % (reverse %)) (fw r))))
+        fr (fn [r] (let [lr (- l (count r)) sn (repeat nil)]
+                     (map #(concat (take % sn) r (take (- lr %) sn)) (range (inc lr)))))
         fre (fn [vs rs] (mapcat (fn [r] (map #(concat % [r]) vs)) rs))
         als (#(reduce fre (map list (first %)) (rest %)) (map fr v))
         fsqs (fn [al]
@@ -15,5 +14,5 @@
                            (#(take % (map (partial take %) 
                                        (map (partial drop j) (drop i al)))) 
                              (min (- l j) (- w i))))))))))]
-    (frequencies (map count (reduce into #{} (map fsqs als))))))
+(frequencies (map count (reduce into #{} (map fsqs als))))))
 
