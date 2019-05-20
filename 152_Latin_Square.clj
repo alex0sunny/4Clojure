@@ -13,5 +13,5 @@
                                   ( #(take % (map (partial take %) 
                                                (map (partial drop j) (drop i al)))) 
                                     (min (- l j) (- w i)) ))))))))]
-(frequencies (map count (reduce into #{} (map fsqs als))))))
+    (frequencies (map count (reduce into #{} (map fsqs als))))))
 
