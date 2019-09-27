@@ -5,7 +5,6 @@
                                        (map #(concat % [a]) (get mp qp)))))
                  mc (into [] (get mt qp))))
         fup (fn [mp] (reduce #(fup0 %2 % mp) {} (keys mp)))
-        sm (take-while #(not= {} %) 
-                   (rest (iterate fup (hash-map st [[]]))))]
+        sm (take-while not-empty (rest (iterate fup (hash-map st [[]]))))]
     (map #(apply str %) (mapcat (fn [[q s]] (if (get ac q) s))
                           (mapcat #(into [] %) sm)))))
