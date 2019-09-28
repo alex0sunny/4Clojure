@@ -7,4 +7,4 @@
         fup (fn [mp] (reduce #(fup0 %2 % mp) {} (keys mp)))
         sm (take-while not-empty (rest (iterate fup (hash-map st [[]]))))]
     (map #(apply str %) (mapcat (fn [[q s]] (if (get ac q) s))
-                          (mapcat #(into [] %) sm)))))
+                          (mapcat seq sm)))))
