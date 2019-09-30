@@ -3,7 +3,7 @@
                (reduce (fn [mc [a q]] 
                          (assoc mc q (concat (q mc)
                                        (map #(str % a) (qp mp)))))
-                 mc (into [] (qp mt))))
+                 mc (seq (qp mt))))
         fup (fn [mp] (reduce #(fup0 %2 % mp) {} (keys mp)))
         sm (take-while not-empty (iterate fup (hash-map st [""])))]
     (mapcat (fn [[q s]] (if (q ac) s)) (mapcat seq sm))))
