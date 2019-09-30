@@ -5,5 +5,5 @@
                                        (map #(str % a) (qp mp)))))
                  mc (seq (qp mt))))
         fup (fn [mp] (reduce #(fup0 %2 % mp) {} (keys mp)))
-        sm (take-while not-empty (iterate fup (hash-map st [""])))]
+        sm (take-while not-empty (iterate fup {st [""]}))]
     (mapcat (fn [[q s]] (if (q ac) s)) (mapcat seq sm))))
