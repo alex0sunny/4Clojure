@@ -3,8 +3,8 @@
         [l] (drop-while #(< (* % %) (count s)) (range))
         els (#(butlast (interleave % %)) (range 1 (inc l)))
         es (map first 
-             (rest (reductions (fn [[_ i] el] (split-at el i))
-                 		   	       [nil (concat s (repeat "*"))] els)))
+             (rest (reductions (fn [[_ i] el] (split-at el i)) 
+                               [nil (concat s (repeat "*"))] els)))
         fro #(vec (apply map vector (map reverse %)))
         sq0 (reduce #(cons %2 (fro %)) [[]] es)
         sq1 (map #(interpose " " %) (if (even? l) (fro (fro sq0)) sq0))
