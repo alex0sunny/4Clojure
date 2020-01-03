@@ -24,8 +24,8 @@
                  (map #(Integer/toBinaryString %) bm))
         w (apply max (map count dm0)) h (count bm)
         dm (vec (map #(vec (concat (repeat (- w (count %)) 0) %)) dm0))
-        ds (mapcat #(vector (butlast %) % (rest %))
-                   (mapcat #(vector % (map reverse %))
+        ds (mapcat #((juxt butlast identity rest) %)
+                   (mapcat #((juxt identity (partial map reverse)) %)
                            (map #(map (partial vector %) [1 0 -1]) [1 -1])))
         f-nx (fn [prs d] (set (mapcat #(map vec (map (partial map + %) d)) prs)))
         psets (for [x (range w) y (range h) d ds :when (= 1 (get-in dm [y x]))] 
