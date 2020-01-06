@@ -1,13 +1,11 @@
 (fn [b e]
   (let [s (apply str (take-while #(<= % e) (iterate #(* % %) b)))
         [l] (drop-while #(< (* % %) (count s)) (range))
-        els (#(butlast (interleave % %)) (range 1 (inc l)))
-        xs (->> (map list els (cycle [[1 1] [1 -1] [-1 -1] [-1 1]]))
-                (reductions 
-                  (fn [xs [el d]] 
-                    (#(take el (rest (iterate (partial map + d) %))) 
-                      (last xs))) '((0 0)))
-                (#(butlast (mapcat identity %))))
+        xs (->> (map list (#(interleave % %) (rest (range))) 
+                          (cycle [[1 1] [1 -1] [-1 -1] [-1 1]]))
+                (mapcat (fn [[ll d]] (take ll (repeat d))))
+                (reductions #(map + % %2) '(0 0))
+                (take (* l l)))
         m (into {} (map vector xs (concat s (repeat "*"))))
         yxs (map #(map % xs) [first second])
         [[ymi xmi] [yma xma]] (map #(map (partial apply %) yxs)
