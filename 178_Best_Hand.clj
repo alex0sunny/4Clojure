@@ -1,20 +1,14 @@
 (fn [cs] 
-  (let [fcs (fn [[s r]] 
-              {:suit ({\S :spade \H :heart \D :diamond \C :club} s)
-               :rank ((into {} (map vector "23456789TJQKA" (range))) r)})
-        ms (map fcs cs)
-        rks (map :rank ms)
-        fs (vals (frequencies rks))
-        [pair two-pair] (filter #(= 2 %) fs)
-        straight ((into #{[0 1 2 3 12]} (partition 5 1 (range 13)))
-                    (sort rks))
-        flush_ (not (second (set (map :suit ms))))]
+  (let [rks (map #((into {} (map vector "23456789TJQKA" (range))) (second %)) cs)
+        fs (sort > (vals (frequencies rks)))
+        straight ((set (map set (partition 5 1 (cons 12 (range 13))))) (set rks))
+        flush_ (not (second (set (map first cs))))]
     (cond (and straight flush_) :straight-flush
           ((set fs) 4) :four-of-a-kind
-          (= 2 (count fs)) :full-house
+          (= fs [3 2]) :full-house
           flush_ :flush
           straight :straight
-          ((set fs) 3) :three-of-a-kind
-          two-pair :two-pair
-          pair :pair
+          (= fs [3 1 1]) :three-of-a-kind
+          (= fs [2 2 1]) :two-pair
+          (= fs [2 1 1 1]) :pair
           :else :high-card)))
