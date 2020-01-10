@@ -6,13 +6,8 @@
         rks (map :rank ms)
         fs (vals (frequencies rks))
         [pair two-pair] (filter #(= 2 %) fs)
-        cnt ((fn [rks] (->> (range 2 (inc (count rks)))
-                            (mapcat #(partition % 1 (sort rks)))
-                            (filter #(apply = (map - % (range))))
-                            (cons [])
-                            (apply max-key count)
-                            count)) rks)
-        straight (or (= 5 cnt) (= (sort rks) [0 1 2 3 12]))
+        straight ((into #{[0 1 2 3 12]} (partition 5 1 (range 13)))
+                    (sort rks))
         flush_ (not (second (set (map :suit ms))))]
     (cond (and straight flush_) :straight-flush
           ((set fs) 4) :four-of-a-kind
