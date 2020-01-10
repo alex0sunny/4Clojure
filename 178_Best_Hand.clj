@@ -4,7 +4,7 @@
         straight ((set (map set (partition 5 1 (cons 12 (range 13))))) (set rks))
         flush_ (not (second (set (map first cs))))]
     (cond (and straight flush_) :straight-flush
-          ((set fs) 4) :four-of-a-kind
+          (= fs [4 1]) :four-of-a-kind
           (= fs [3 2]) :full-house
           flush_ :flush
           straight :straight
