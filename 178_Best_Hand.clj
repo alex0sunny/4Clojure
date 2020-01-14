@@ -1,14 +1,16 @@
-(fn [cs] 
-  (let [rks (map #((into {} (map vector "23456789TJQKA" (range))) (second %)) cs)
-        fs (sort > (vals (frequencies rks)))
-        straight ((set (map set (partition 5 1 (cons 12 (range 13))))) (set rks))
-        flush_ (not (second (set (map first cs))))]
-    (cond (and straight flush_) :straight-flush
-          (= fs [4 1]) :four-of-a-kind
-          (= fs [3 2]) :full-house
-          flush_ :flush
-          straight :straight
-          (= fs [3 1 1]) :three-of-a-kind
-          (= fs [2 2 1]) :two-pair
-          (= fs [2 1 1 1]) :pair
-          :else :high-card)))
+#(let [rks (map second %)
+       fs (sort (vals (frequencies rks)))
+       s ((set (map set (partition 5 1 "A23456789TJQKA"))) 
+          (set rks))
+       f (= 1 (count (set (map first %))))
+       res (condp = fs [1 4] :four-of-a-kind
+                       [2 3] :full-house
+                       [1 1 3] :three-of-a-kind
+                       [1 2 2] :two-pair
+                       [1 1 1 2] :pair
+                       :high-card)]
+   (cond (and s f) :straight-flush
+         (= 2 (count fs)) res
+         s :straight
+         f :flush
+         :else res))
