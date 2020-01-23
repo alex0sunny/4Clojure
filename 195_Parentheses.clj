@@ -1,8 +1,8 @@
-(fn fpar [n]
+(fn f [n]
   (if (= n 0) #{""}
-    (#(reduce conj (set %)
-                   (for [[ps1 ps2] (map list %2 (reverse %2))
-                         str1 ps1 str2 ps2]
-                     (str str1 str2)))
-      (map #(str "(" % ")") (fpar (dec n)))
-      (map fpar (range 1 n)))))
+      (let [q (map f (range 1 n))
+            t (map #(str "(" % ")") (f (dec n)))]
+        (reduce conj (set t)
+                     (for [[s p] (map list q (reverse q)) 
+                           a s b p]
+                       (str a b))))))
