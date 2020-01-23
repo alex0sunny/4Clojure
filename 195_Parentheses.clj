@@ -1,4 +1,4 @@
-(fn [n]
+(fn fpar [n]
   (if (= n 0) #{""}
     (#(reduce conj (set %)
                    (for [[ps1 ps2] (map list %2 (reverse %2))
