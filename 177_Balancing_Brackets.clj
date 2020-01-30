@@ -1,6 +1,5 @@
-(fn fre [no-brackets nested-brackets in]
-  (#(if (= in %) (not= nil (re-seq no-brackets in))
-        (fre no-brackets nested-brackets %)) 
+(fn fre [nested-brackets in]
+  (#(if (= in %) (nil? (re-find #"[(){}\[\]]" in))
+        (fre nested-brackets %))
     (clojure.string/replace in nested-brackets "")))
-#"^[^(){}\[\]]*$"
 #"\([^(){}\[\]]*\)|\{[^(){}\[\]]*\}|\[[^(){}\[\]]*\]"
