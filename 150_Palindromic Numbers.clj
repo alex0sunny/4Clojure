@@ -6,7 +6,7 @@
         lh (quot (dec l) 2)
         m (nth ds lh)
         dh (take lh ds)
-        fi #(cons % (if (even? l) [%]))
+        fi #(if (odd? l) [%] [% %])
         nn (fm (concat dh (fi m) (reverse dh)))]
     (#(if (< nn n) (fnx %) (cons nn (lazy-seq (fnx %))))
       (cond       
