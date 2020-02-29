@@ -7,6 +7,6 @@
         fc #(fi (concat 
                   % ((if (odd? l) rest identity) (reverse %))))
         nn (fc p)]
-    (#(if (< nn n) % (cons nn %))
-      (lazy-seq (fnx (if (apply = 9 p) (+ nn 2)
-                        (fc (fd (inc (fi p))))))))))
+    (concat (if (>= nn n) [nn])
+            (lazy-seq (fnx (if (apply = 9 p) (+ nn 2)
+                               (fc (fd (inc (fi p))))))))))
