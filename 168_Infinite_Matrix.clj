@@ -1,12 +1,6 @@
-(fn finf [f & rs] 
-  (let [[m n s t] rs
+(fn [f & rs] 
+  (let [[m n s t] rs 
         [m n] [(or m 0) (or n 0)]
-        f-seq (fn f-seq
-                ([k] (f-seq k n))
-                ([k p] (lazy-seq (cons (f k p) 
-                                       (f-seq k (inc p))))))
-        f2d (fn f2d 
-              ([] (f2d m)) 
-              ([l] (lazy-seq (cons (f-seq l)
-                                   (f2d (inc l))))))]
-    (if s (take s (map #(take t %) (f2d))) (f2d))))
+        fs (fn fs [k p] (lazy-seq (cons (f k p) (fs k (inc p)))))
+        f2 (fn f2 [l] (lazy-seq (cons (fs l n) (f2 (inc l)))))]
+    (if s (take s (map #(take t %) (f2 m))) (f2 m))))
