@@ -1,3 +1,3 @@
-(fn fsets [fr fset & ss] (apply fset (map (partial apply fr) ss)))
-(fn [f & r] (reduce #(set (concat % [%2] (map (partial + %2) %))) #{f} r))
-(fn [sf & sr] (not (empty? (reduce #(set (filter % %2)) sf sr))))
+(fn [fr fset & ss] (apply fset (map fr ss)))
+(fn [s] (reduce #(into (conj % %2) (map + % (repeat %2))) #{} s))
+(fn [f & r] (not= #{} (reduce #(set (filter % %2)) f r)))
