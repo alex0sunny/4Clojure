@@ -1,4 +1,3 @@
-;; Longest Increasing Sub-Seq
 (fn [[f & e :as s]] 
   (first 
     (sort-by count > 
