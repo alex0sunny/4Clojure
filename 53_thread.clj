@@ -5,5 +5,5 @@
     (->>  
       (iterate fsp [[] (partition 2 1 s)])
       (take-while #(not= [[][]] %))
-      (#(reverse (map first %)))
-      (#(distinct (flatten (apply max-key count %)))))))
+      (map first)
+      (#(distinct (flatten (first (sort-by count > %))))))))
