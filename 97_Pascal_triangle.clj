@@ -1,3 +1,6 @@
-(fn f [n] 
-  (if (= n 1) [1]
-      (concat [1] (map #(apply + %) (partition 2 1 (f (dec n)))) [1])))
+#(nth 
+  (iterate 
+    (fn [[_ & r :as s]] 
+      (concat [1] (map + r s) [1])) 
+    [1]) 
+  (dec %))
