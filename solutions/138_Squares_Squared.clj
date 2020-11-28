@@ -14,7 +14,6 @@
                 (mapcat (fn [[ll d]] (take ll (repeat d))))
                 (reductions #(map + % %2) [(- ld (mod ld 2)) ld])
                 (take (* l l)))
-        m (into {} (map vector xs (concat s (repeat "*"))))
-        yxs (map #(map % xs) [first second])]
+        m (into {} (map vector xs (concat s (repeat "*"))))]
     (#(vec (for [y %] (apply str (for [x %] (get m [y x] " ")))))
       (range (+ l ld)))))
